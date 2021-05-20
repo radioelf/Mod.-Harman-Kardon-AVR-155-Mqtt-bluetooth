@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name esp32_gateway-rescue)(type Legacy)(uri ${KIPRJMOD}/esp32_gateway-rescue.lib)(options "")(descr ""))
+  (lib (name controlAVR155-rescue)(type Legacy)(uri ${KIPRJMOD}/controlAVR155-rescue.lib)(options "")(descr ""))
+)
