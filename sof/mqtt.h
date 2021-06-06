@@ -125,8 +125,8 @@ void discovery (bool force) {
   String ValueName = "AVR155";
   String Name = "avr155";
   String Unit = "";
-  String topicName = clientId + topicSt;
-  topicSt = topicName;
+  String topicName = topicSt;
+	
   uint8_t mac[6];
   WiFi.macAddress(mac);
   String Mac = String(mac[0], 16) + String(mac[1], 16) + String(mac[2], 16) + String(mac[3], 16) + String(mac[4], 16) + String(mac[5], 16);
@@ -136,6 +136,8 @@ void discovery (bool force) {
   messageStatus += String(F("name\":\"")) + ValueName + String(F("\",\""));
   messageStatus += String(F("state_topic\":\"")) + topicName + String(F("\",\""));
   messageStatus += String(F("availability_topic\":\"")) + topicName + String(F("\",\""));
+  messageStatus += String(F("payload_available\":\"Online")) + String(F("\",\""));
+  messageStatus += String(F("payload_not_available\":\"Offline")) + String(F("\",\""));
   messageStatus += String(F("unique_id\":\"")) + String(F("AVR155-ESP32_")) + Name + String(F("\",\""));
   messageStatus += String(F("device\":{\"identifiers\":\"")) + Mac + String(F("\",\""));
   messageStatus += String(F("name\":\"Control AVR155")) + String(F("\",\"sw_version\":\"Control-AVR155 ")) + String(VERSION) + "-" + String(Compiler) + String(F("\",\"model\":\"avr155\",\"manufacturer\":\"Radioelf\"}"));
@@ -280,7 +282,7 @@ void discovery (bool force) {
     }
     delay (1);
   }
-  mqttclient.publish(topicSt.c_str(), autoDetec ? "online" : "offline", MQTT_RETAIN);
+  mqttclient.publish(topicSt.c_str(), autoDetec ? "Online" : "Offline", MQTT_RETAIN);
 
 }
 
@@ -622,7 +624,7 @@ bool mqttConnect() {
 #endif
     return false;
   }
-  mqttclient.publish(topicSt.c_str(), "online", MQTT_RETAIN);
+  mqttclient.publish(topicSt.c_str(), "Online", MQTT_RETAIN);
   const String SubTopic1 = clientId + "/switch/#";
   if (!mqttclient.subscribe(SubTopic1.c_str(), 0)) {
 #if DebugSerial
