@@ -217,7 +217,7 @@ void loop() {
 #endif
     delay(50);
     if (++MqttPublic % 12 == 0) {                                                     // ≈1 minuto 
-      mqttclient.publish(topicSt.c_str(), "online", MQTT_RETAIN);
+      mqttclient.publish(topicSt.c_str(), "Online", MQTT_RETAIN);
       if (WiFi.RSSI() < -70) {                                                        // Señal RF baja?
         char payload[5];
         snprintf(payload, 4, "%d", WiFi.RSSI());
